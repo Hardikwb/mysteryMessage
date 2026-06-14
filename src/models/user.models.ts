@@ -9,9 +9,8 @@ export interface User extends Document {
   password: string;
   isAcceptingMessage: boolean;
   isVerified: boolean;
-  verifyCode:string;
-  verifyCodeExpiry:Date;
-  isAcceptingMessages: boolean;
+  verifyCode: string;
+  verifyCodeExpiry: Date;
 }
 
 const userSchema: Schema<User> = new Schema(
@@ -39,21 +38,19 @@ const userSchema: Schema<User> = new Schema(
       type: Boolean,
       default: false,
     },
-    isVerified:{
-      type:Boolean,
-      default:false
+    isVerified: {
+      type: Boolean,
+      default: false,
     },
-    verifyCode:{
-        type:String
+    verifyCode: {
+      type: String,
     },
-    verifyCodeExpiry:{
-        type:Date
+    verifyCodeExpiry: {
+      type: Date,
     },
-    isAcceptingMessages: {
-        type: Boolean,
-        default: true,
-      }
-},{ timestamps: true },);
+  },
+  { timestamps: true },
+);
 
 userSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
@@ -61,5 +58,7 @@ userSchema.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-const userModel = (mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>("User", userSchema);
+const userModel =
+  (mongoose.models.User as mongoose.Model<User>) ||
+  mongoose.model<User>("User", userSchema);
 export default userModel;
