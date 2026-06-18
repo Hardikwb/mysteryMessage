@@ -33,7 +33,7 @@ type MessageCardProps = {
 };
 
 
-export async function MessageCard({ message, onMessageDelete }: MessageCardProps) {
+export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
     const handleDeleteConfirm = async() =>{
         try {
             const response = await axios.delete(`/api/messages?messageId=${message._id}`)
